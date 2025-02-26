@@ -9,20 +9,37 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { ProductProps } from "../../../helpers/interfaces/products";
+import { ProductProps, SubProductProps } from "../../../helpers/interfaces/products";
 import { CategoryProps } from "../../../helpers/interfaces/categories";
 import { usePathname } from "next/navigation";
+import { useProductStore } from "@/store";
 
-type ProductCardProps = { product: ProductProps | CategoryProps };
+type ProductCardProps = { product: ProductProps | CategoryProps | SubProductProps };
 
 export function ProductCard({ product }: ProductCardProps) {
   const pathname = usePathname();
   const isDocs = pathname.startsWith("/docs");
 
+  const { setProducts } = useProductStore();
+
+  const addToCart = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    product: ProductProps
+  ) => {
+    event.preventDefault();
+    setProducts((prev) => {
+      const current = prev.find((p) => p.id === product.id);
+      if (!current) {
+        return [...prev, product];
+      }
+      return prev;
+    });
+  };
+
   return (
-    <Card className="rounded-lg border-0 bg-zinc-900">
+    <Card className="rounded group border-0 h-[300px] overflow-hidden">
       <CardHeader className="p-0">
-        <div className="aspect-[4/3] relative overflow-hidden rounded-t-lg">
+        <div className="h-[300px] relative overflow-hidden object-cover rounded-t-lg">
           <Image
             src={
               "imageUrl" in product
@@ -35,8 +52,11 @@ export function ProductCard({ product }: ProductCardProps) {
           />
         </div>
       </CardHeader>
-      <CardContent className="p-4">
-        <h3 className="font-medium text-white">
+     <div className="translate-y-full group-hover:-translate-y-full bg-zinc-300/50 backdrop-blur-md  transition-transform duration-300">
+
+     
+      <CardContent className="p-4 ">
+        <h3 className="font-medium text-black">
           {isDocs
             ? "title" in product
               ? product.title
@@ -53,15 +73,18 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
       </CardContent>
       <CardFooter className="p-4 pt-0 flex gap-2">
-        <Button className="flex-1 bg-white text-black hover:bg-zinc-200">
+        <Button
+          className="flex-1 bg-white text-black hover:bg-zinc-200"
+          onClick={(event) => addToCart(event, product as ProductProps)}
+        >
           {isDocs ? "View products" : "Add to card"}
         </Button>
         {!isDocs && (
-          <Button size="icon" variant="outline" className="border-zinc-800">
-            <Eye className="h-4 w-4 text-white" />
+          <Button size="icon" variant="outline" className="border-zinc-300">
+            <Eye className="h-4 w-4 text-black" />
           </Button>
         )}
-      </CardFooter>
+      </CardFooter></div>
     </Card>
   );
 }

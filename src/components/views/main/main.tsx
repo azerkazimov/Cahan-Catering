@@ -10,52 +10,37 @@ import { products } from "@/data/navbar";
 
 import Link from "next/link";
 
-import { Github } from "lucide-react";
 import { HiOutlineCube } from "react-icons/hi";
-import { GoArrowRight } from "react-icons/go";
-import { ProductCard } from "@/components/shared/product-card/product-card";
-import { ProductProps } from "../../../helpers/interfaces/products";
 
 export default async function Main() {
-  const response = await fetch(`${process.env.API_HOST}/items`);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch products: ${response.statusText}`);
-  }
-  const items = await response.json();
-
   return (
-    <main className="container">
+    <main
+      className="bg-cover bg-center min-h-screen"
+      style={{
+        backgroundImage:
+          "url(https://lasahijaderas.com/wp-content/uploads/2024/07/canapes-de-catering.jpg)",
+      }}
+    >
       <section className="container py-24 text-center animate-fadeUp">
-        <div className="mb-8 flex justify-center">
-          <Link href="https://github.com/sadmann7/skateshop" target="_black">
-            <Button
-              variant="outline"
-              className="bg-zinc-800 font-[900] rounded-full hover:bg-zinc-900 text-xs "
-            >
-              <Github className=" h-4 w-4" />
-              5327 stars on GitHub
-            </Button>
-          </Link>
-        </div>
-
         <h1 className="mb-6 text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl ">
-          Foundation for your commerce platform
+          Exquisite Catering for Every Occasion
         </h1>
         <p className="mx-auto mb-8 max-w-[500px] text-lg text-zinc-400 sm:text-xl">
-          Skateshop is an open-source platform for building and customizing your
-          own commerce platform with ease.
+          Indulge in gourmet meals crafted by top chefs, perfect for weddings,
+          corporate events, and private gatherings. Savor a diverse menu
+          tailored to your taste.
         </p>
 
         <div className="flex justify-center gap-4">
           <Button size="lg" className="bg-white text-black hover:bg-zinc-200">
-            Buy now
+            Order now
           </Button>
           <Button
             size="lg"
             variant="outline"
-            className="border-zinc-800 bg-transparent text-white hover:bg-zinc-800"
+            className="bg-white text-black hover:bg-zinc-200"
           >
-            Sell now
+            Browse Menu
           </Button>
         </div>
       </section>
@@ -64,7 +49,7 @@ export default async function Main() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {products.map((product) => (
             <Link key={product.name} href={product.items[0].href}>
-              <Card className="border-zinc-800 max-h-[186px] h-full transition-all duration-200 hover:bg-zinc-900">
+              <Card className="border-zinc-200 max-h-[186px] h-full transition-all duration-200 bg-blur-sm bg-white/60 hover:bg-zinc-300 ">
                 <CardHeader className="h-full flex flex-col justify-between">
                   <div className="flex flex-col py-3 gap-2">
                     <CardTitle>{product.name}</CardTitle>
@@ -72,7 +57,7 @@ export default async function Main() {
                       {product.description}
                     </CardDescription>
                   </div>
-                  <div className="mt-4 flex items-center text-sm text-zinc-400 gap-1 ">
+                  <div className="mt-4 flex items-center text-sm text-zinc-400 gap-1">
                     <HiOutlineCube />
                     <span className="mt-[-2px]">
                       {product.items.length} products
@@ -80,32 +65,6 @@ export default async function Main() {
                   </div>
                 </CardHeader>
               </Card>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="container mx-auto px-4 pb-24 max-w-6xl">
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex flex-col ">
-            <h2 className="text-3xl font-semibold">Featured products</h2>
-            <p className="text-zinc-500">
-              Explore products from around the world
-            </p>
-          </div>
-          <div className="flex">
-            <Link href="/" className="text-zinc-800">
-              <Button variant="outline" className="text-white font-medium">
-                <span>View all products</span> <GoArrowRight />
-              </Button>
-            </Link>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-          {items.map((product: ProductProps) => (
-            <Link key={product.id} href={product.path}>
-              <ProductCard key={product.id} product={product} />
             </Link>
           ))}
         </div>

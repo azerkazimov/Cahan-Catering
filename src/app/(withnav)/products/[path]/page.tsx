@@ -1,9 +1,8 @@
 import Image from "next/image";
 
+import CardActions from "@/components/shared/card-actions";
+import { Star } from "lucide-react";
 import { ProductProps } from "../../../../helpers/interfaces/products";
-import QuantitySelector from "@/components/shared/quantity-selector";
-import { Button } from "@/components/ui/button";
-import { Heart, Star } from "lucide-react";
 
 interface ItemProps {
   params: Promise<{
@@ -19,7 +18,7 @@ export default async function ProductCategory({ params }: ItemProps) {
   if (!response.ok) {
     throw new Error(`Failed to fetch products: ${response.statusText}`);
   }
-  
+
   const items: ProductProps[] = await response.json();
 
   const itemArr = items.flatMap((item) => {
@@ -29,15 +28,16 @@ export default async function ProductCategory({ params }: ItemProps) {
   const product = itemArr.find((item) => item.path === `/products/${path}`);
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
+    <div className="min-h-screen mt-12 text-black p-6">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 mt-8">
         <div className="aspect-square relative bg-zinc-900 rounded-lg">
           <Image
             src={
               product?.imageUrl ||
               "https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png"
             }
-            alt="Electronic Fresh Keyboard"
+            alt={product?.name || "No image available."}
+            layout="fill"
             fill
             className="object-cover rounded-lg"
           />
@@ -67,19 +67,21 @@ export default async function ProductCategory({ params }: ItemProps) {
             ))}
           </div>
 
-          <QuantitySelector />
+          {product && <CardActions product={product} />}
+
+          {/* <QuantitySelector product={product?.id} />
 
           <div className="flex gap-4">
             <Button className="flex-1 bg-white text-black hover:bg-zinc-200">
               Buy now
             </Button>
             <Button variant="outline" className="flex-1">
-              Add to cart
+              Add to card
             </Button>
             <Button variant="outline" size="icon">
               <Heart className="w-4 h-4" />
             </Button>
-          </div>
+          </div> */}
 
           <div className="pt-4">
             <h5>Description</h5>

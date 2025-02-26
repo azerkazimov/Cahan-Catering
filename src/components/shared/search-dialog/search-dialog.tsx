@@ -1,25 +1,14 @@
 "use client";
 
 import * as React from "react";
-import {
-  Calculator,
-  Calendar,
-  CreditCard,
-  Settings,
-  Smile,
-  User,
-} from "lucide-react";
 import { IoSearchOutline } from "react-icons/io5";
 
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
-  CommandGroup,
   CommandInput,
-  CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 import {
   Dialog,
@@ -27,14 +16,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 
-import { DialogProps } from "@radix-ui/react-dialog";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import { ProductProps } from "@/helpers/interfaces/products";
+import { searchProducts } from "@/utils/actions/search-product";
+import SearchResult from "./search-result";
+import SearchSuggestion from "./search-suggestion";
 
-export function SearchDialog({ ...props }: DialogProps) {
+export function SearchDialog() {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [searchResults, setSearchResults] = React.useState<ProductProps[]>([]);
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -48,10 +41,33 @@ export function SearchDialog({ ...props }: DialogProps) {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
+  // Search handler with debounce
+  React.useEffect(() => {
+    const timerId = setTimeout(async () => {
+      if (searchQuery) {
+        try {
+          const result = await searchProducts(searchQuery);
+          setSearchResults(result);
+        } catch (error) {
+          console.error("Search failed:", error);
+          setSearchResults([]);
+        }
+      } else {
+        setSearchResults([]);
+      }
+    }, 250);
+    return () => clearTimeout(timerId);
+  }, [searchQuery]);
+
+  const handleProductSelect = (product: ProductProps) => {
+    router.push(product.path);
+    setOpen(false);
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" className="bg-white/30 ">
           <div className="flex items-center gap-2">
             <IoSearchOutline className="h-4 w-4" />
             <span>Search products...</span>
@@ -64,41 +80,22 @@ export function SearchDialog({ ...props }: DialogProps) {
       <DialogContent className="p-0">
         <DialogTitle className="sr-only">Search products</DialogTitle>
         <Command>
-          <CommandInput placeholder="Type a command or search..." />
+          <CommandInput
+            placeholder="Type a command or search..."
+            value={searchQuery}
+            onValueChange={setSearchQuery}
+          />
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup heading="Suggestions">
-              <CommandItem>
-                <Calendar className="mr-2 h-4 w-4" />
-                <span>Calendar</span>
-              </CommandItem>
-              <CommandItem>
-                <Smile className="mr-2 h-4 w-4" />
-                <span>Search Emoji</span>
-              </CommandItem>
-              <CommandItem>
-                <Calculator className="mr-2 h-4 w-4" />
-                <span>Calculator</span>
-              </CommandItem>
-            </CommandGroup>
-            <CommandSeparator />
-            <CommandGroup heading="Settings">
-              <CommandItem>
-                <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
-                <CommandShortcut>⌘P</CommandShortcut>
-              </CommandItem>
-              <CommandItem>
-                <CreditCard className="mr-2 h-4 w-4" />
-                <span>Billing</span>
-                <CommandShortcut>⌘B</CommandShortcut>
-              </CommandItem>
-              <CommandItem>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-                <CommandShortcut>⌘S</CommandShortcut>
-              </CommandItem>
-            </CommandGroup>
+            {searchQuery.trim() === "" ? (
+              <SearchSuggestion />
+            ) : searchResults.length > 0 ? (
+              <SearchResult
+                results={searchResults}
+                onSelect={handleProductSelect}
+              />
+            ) : (
+              <CommandEmpty>No results found.</CommandEmpty>
+            )}
           </CommandList>
         </Command>
       </DialogContent>

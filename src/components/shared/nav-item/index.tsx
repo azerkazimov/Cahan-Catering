@@ -18,11 +18,14 @@ interface NavItemProps {
 export default function NavMenuItem({ item }: NavItemProps) {
   const path = usePathname();
   const isActive = path.startsWith(`/docs/${item.name.toLowerCase()}`);
-  
+
   return (
     <NavigationMenuItem>
       <NavigationMenuTrigger
-        className={cn(isActive && "font-bold bg-slate-500")}
+        className={cn(
+          "bg-transparent hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+          isActive && "font-bold bg-slate-500"
+        )}
       >
         {item.name}
       </NavigationMenuTrigger>

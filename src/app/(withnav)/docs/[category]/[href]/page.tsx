@@ -1,5 +1,5 @@
-import { NavBarProps } from "../../../../../helpers/interfaces/navbar";
-// import { products } from "@/data/navbar";
+import { ProductCard } from "@/components/shared/product-card/product-card";
+import { SubProductProps } from "@/helpers/interfaces/products";
 
 interface PageProps {
   params: Promise<{
@@ -8,29 +8,22 @@ interface PageProps {
   }>;
 }
 
-export default async function PageProducts({ params }: PageProps) {
+export default async function SubCategories({ params }: PageProps) {
   const { href, category } = await params;
 
-  const response = await fetch(`${process.env.API_HOST}/products`);
+  const response = await fetch(
+    `${process.env.API_HOST}/docs/${category}/${href}`
+  );
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch products: ${response.statusText}`);
-  }
-  const products: NavBarProps[] = await response.json();
-
-  const accessories = products
-    .flatMap((product) => product.items)
-    .find((item) => item.href === `/docs/${category}/${href}`);
-
-  if (!accessories) return <h1>Category not found</h1>;
+  const items = await response.json();
 
   return (
     <div className="container mt-12">
-      <p>category: {category}</p>
-      <p>
-        you are view product: {accessories.title || "..."} on url:{" "}
-        {accessories.href}
-      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+        {items.map((item: SubProductProps) => (
+          <ProductCard key={item.id} product={item} />
+        ))}
+      </div>
     </div>
   );
 }

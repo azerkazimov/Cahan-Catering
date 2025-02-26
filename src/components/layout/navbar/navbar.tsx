@@ -1,6 +1,8 @@
 import Link from "next/link";
 import * as React from "react";
 
+import NavMenuItem from "@/components/shared/nav-item";
+import ProfileButton from "@/components/shared/profile-button";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -9,13 +11,13 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+
 import { cn } from "@/lib/utils";
+
+import { NavBarProps } from "../../../helpers/interfaces/navbar";
+
 import { SearchDialog } from "../../shared/search-dialog/search-dialog";
 import { Sidebar } from "../../shared/sidebar/sidebar";
-import { Button } from "@/components/ui/button";
-import { NavBarProps } from "../../../helpers/interfaces/navbar";
-import NavMenuItem from "@/components/shared/nav-item";
-// import { products } from "@/data/products";
 
 export default async function NavBar() {
   const response = await fetch(`${process.env.API_HOST}/products`);
@@ -25,16 +27,18 @@ export default async function NavBar() {
   const products = await response.json();
 
   return (
-    <div className="border-b py-4">
+    <div className="border-b border-b-white/50 py-4 fixed w-full top-0 z-10 backdrop-blur-lg bg-white/50">
       <div className="container flex items-center justify-between ">
         <div className="flex items-center gap-4">
           <Link href="/" className="text-lg font-bold">
-            Skateshop
+            Catering
           </Link>
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Lobby</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="bg-transparent hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                  Catering
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                     <li className="row-span-3">
@@ -44,7 +48,7 @@ export default async function NavBar() {
                           href="/"
                         >
                           <div className="mb-2 mt-4 text-lg font-medium">
-                            Scateshop
+                            Catering
                           </div>
                           <p className="text-sm leading-tight text-muted-foreground">
                             An open source e-commerce skateshop build with
@@ -56,8 +60,8 @@ export default async function NavBar() {
                     <ListItem href="/docs" title="Product">
                       All the product we have to offer.
                     </ListItem>
-                    <ListItem href="/docs/installation" title="Build a board">
-                      Build your own custom skateboard.
+                    <ListItem href="/docs/installation" title="Build your own">
+                      Build your own menu.
                     </ListItem>
                     <ListItem href="/docs/primitives/typography" title="Blog">
                       Read our latest blog posts.
@@ -67,7 +71,7 @@ export default async function NavBar() {
               </NavigationMenuItem>
 
               {products.map((navItem: NavBarProps) => (
-                <NavMenuItem key={navItem.id} item={navItem} />
+                <NavMenuItem  key={navItem.id} item={navItem} />
               ))}
             </NavigationMenuList>
           </NavigationMenu>
@@ -75,9 +79,7 @@ export default async function NavBar() {
         <div className="flex items-center gap-4">
           <SearchDialog />
           <Sidebar />
-          <Button>
-            <Link href="/auth/signin">Sign In</Link>
-          </Button>
+          <ProfileButton />
         </div>
       </div>
     </div>
