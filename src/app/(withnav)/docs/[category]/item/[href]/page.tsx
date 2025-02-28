@@ -17,7 +17,7 @@ export default async function SubCategories({
   const href = (await params).href;
    
   const endpoint = href
-    ? `${process.env.API_HOST}/docs/${category}/${href}`
+    ? `${process.env.API_HOST}/docs/${category}/item/${href}`
     : `${process.env.API_HOST}/docs/${category}`;
 
   const response = await fetch(endpoint);

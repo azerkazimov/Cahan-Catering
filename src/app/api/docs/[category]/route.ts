@@ -1,8 +1,8 @@
 import { products } from "@/data/navbar";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { category: string } }) {
-    const { category } = params;
+export async function GET(req: Request, { params }: { params: Promise<{ category: string }> }) {
+    const { category } = await params;
 
     const item = products.find((item) => item.category.toLowerCase() === category.toLowerCase());
 

@@ -7,7 +7,7 @@ import Link from "next/link";
 export default async function Categories({ params }: { params: Promise<{ category: string }> }) {
   const category = (await params).category;
 
-  const response = await fetch(`${process.env.API_HOST}/docs/${category}`);
+  const response = await fetch(`${process.env.API_HOST}/docs/${category}/`);
 
   const items = await response.json();
 
