@@ -2,14 +2,10 @@ import { CategoryProps } from "../../../../helpers/interfaces/categories";
 import { ProductCard } from "@/components/shared/product-card/product-card";
 import Link from "next/link";
 
-interface Props {
-  params: Promise<{
-    category: string;
-  }>;
-}
 
-export default async function Categories({ params }: Props) {
-  const { category } = await params;
+
+export default async function Categories({ params }: { params: Promise<{ category: string }> }) {
+  const category = (await params).category;
 
   const response = await fetch(`${process.env.API_HOST}/docs/${category}`);
 

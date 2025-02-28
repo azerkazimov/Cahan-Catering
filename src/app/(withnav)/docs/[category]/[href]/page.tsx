@@ -1,19 +1,26 @@
 import { ProductCard } from "@/components/shared/product-card/product-card";
 import { SubProductProps } from "@/helpers/interfaces/products";
 
-interface PageProps {
-  params: Promise<{
-    href: string;
-    category: string;
-  }>;
-}
+// interface PageProps {
+//   params: Promise<{
+//     href: string;
+//     category: string;
+//   }>;
+// }
 
-export default async function SubCategories({ params }: PageProps) {
-  const { href, category } = await params;
+export default async function SubCategories({
+  params,
+}: {
+  params: Promise<{ category: string, href: string }>
+}) {
+  const category = (await params).category;
+  const href = (await params).href;
+   
+  const endpoint = href
+    ? `${process.env.API_HOST}/docs/${category}/${href}`
+    : `${process.env.API_HOST}/docs/${category}`;
 
-  const response = await fetch(
-    `${process.env.API_HOST}/docs/${category}/${href}`
-  );
+  const response = await fetch(endpoint);
 
   const items = await response.json();
 

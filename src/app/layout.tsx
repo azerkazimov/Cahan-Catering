@@ -4,7 +4,7 @@ import "./globals.css";
 import Providers from "@/components/shared/providers";
 import AuthProvider from "@/components/shared/providers/auth-provider";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "./api/auth/[...nextauth]/auth-option";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
