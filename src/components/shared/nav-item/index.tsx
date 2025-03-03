@@ -8,6 +8,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
@@ -19,18 +20,35 @@ export default function NavMenuItem({ item }: NavItemProps) {
   const path = usePathname();
   const isActive = path.startsWith(`/docs/${item.name.toLowerCase()}`);
 
+  if (!item.items || item.items.length === 0) {
+    return (
+      <NavigationMenuItem>
+        <Link href={item.path || "#"}>
+          <span
+            className={cn(
+              "text-customBlue px-4 py-2 text-sm hover:text-customBlue font-medium bg-transparent rounded-sm hover:bg-accent focus:bg-accent focus:text-accent-foreground",
+              isActive && "font-bold bg-slate-500"
+            )}
+          >
+            {item.name}
+          </span>
+        </Link>
+      </NavigationMenuItem>
+    );
+  }
+
   return (
     <NavigationMenuItem>
       <NavigationMenuTrigger
         className={cn(
-          "bg-transparent hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+          "bg-transparent hover:bg-accent hover:text-customBlue focus:bg-accent focus:text-accent-foreground text-customBlue",
           isActive && "font-bold bg-slate-500"
         )}
       >
         {item.name}
       </NavigationMenuTrigger>
       <NavigationMenuContent>
-        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
           {item.items.map((component) => (
             <ListItem
               key={component.title}
@@ -61,8 +79,8 @@ const ListItem = React.forwardRef<
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          <div className="text-sm font-medium leading-none text-customBlue">{title}</div>
+          <p className="text-customLightBlue line-clamp-2 text-sm leading-snug ">
             {children}
           </p>
         </a>

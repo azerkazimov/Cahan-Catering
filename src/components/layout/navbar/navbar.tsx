@@ -18,6 +18,7 @@ import { NavBarProps } from "../../../helpers/interfaces/navbar";
 
 import { SearchDialog } from "../../shared/search-dialog/search-dialog";
 import { Sidebar } from "../../shared/sidebar/sidebar";
+import Image from "next/image";
 
 export default async function NavBar() {
   const response = await fetch(`${process.env.API_HOST}/products`);
@@ -31,16 +32,16 @@ export default async function NavBar() {
       <div className="container flex items-center justify-between ">
         <div className="flex items-center gap-4">
           <Link href="/" className="text-lg font-bold">
-            Catering
+            <Image src="/cahan.png" alt="Catering" width={100} height={50} />
           </Link>
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                  Catering
+                <NavigationMenuTrigger className="text-customBlue bg-transparent hover:bg-accent hover:text-customBlue focus:bg-accent focus:text-accent-foreground">
+                  Əsas səhifə
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  <ul className="text-customBlue grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                     <li className="row-span-3">
                       <NavigationMenuLink asChild>
                         <Link
@@ -50,28 +51,38 @@ export default async function NavBar() {
                           <div className="mb-2 mt-4 text-lg font-medium">
                             Catering
                           </div>
-                          <p className="text-sm leading-tight text-muted-foreground">
-                            An open source e-commerce skateshop build with
-                            ecerything new un Next.js.
+                          <p className="text-customLightBlue text-sm leading-tight ">
+                            Tədbirləriniz üçün premium catering xidməti.
                           </p>
                         </Link>
                       </NavigationMenuLink>
                     </li>
-                    <ListItem href="/docs" title="Product">
-                      All the product we have to offer.
+                    <ListItem href="/files/menu" title="Menyu">
+                      <span className="text-customLightBlue">
+                        Zövqünüzə uyğun dadlı yeməkləri kəşf edin.
+                      </span>
                     </ListItem>
-                    <ListItem href="/docs/installation" title="Build your own">
-                      Build your own menu.
+                    <ListItem
+                      href="/files/custom-menu"
+                      title="Öz menyunuzu yaradın"
+                    >
+                      <span className="text-customLightBlue">
+                        Sizin üçün xüsusi olaraq hazırlanmış menyular tərtib
+                        edin.
+                      </span>
                     </ListItem>
-                    <ListItem href="/docs/primitives/typography" title="Blog">
-                      Read our latest blog posts.
+                    <ListItem href="/files/blog" title="Bloq">
+                      <span className="text-customLightBlue">
+                        Yemək sənəti və tədbir planlaması ilə bağlı məqalələri
+                        oxuyun.
+                      </span>
                     </ListItem>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
               {products.map((navItem: NavBarProps) => (
-                <NavMenuItem  key={navItem.id} item={navItem} />
+                <NavMenuItem key={navItem.id} item={navItem} />
               ))}
             </NavigationMenuList>
           </NavigationMenu>

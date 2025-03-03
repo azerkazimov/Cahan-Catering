@@ -37,6 +37,8 @@ export default {
 				'2xl': '1320px',
 			},
 			colors: {
+				customBlue: "#045579",
+				customLightBlue: "#a2b3bb",
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				card: {
