@@ -26,7 +26,7 @@ export default function NavMenuItem({ item }: NavItemProps) {
         <Link href={item.path || "#"}>
           <span
             className={cn(
-              "text-customBlue px-4 py-2 text-sm hover:text-customBlue font-medium bg-transparent rounded-sm hover:bg-accent focus:bg-accent focus:text-accent-foreground",
+              "text-customBlue hover:text-black px-4 py-2 text-sm font-medium bg-transparent rounded-sm hover:bg-accent focus:bg-accent focus:text-accent-foreground",
               isActive && "font-bold bg-slate-500"
             )}
           >
@@ -41,7 +41,7 @@ export default function NavMenuItem({ item }: NavItemProps) {
     <NavigationMenuItem>
       <NavigationMenuTrigger
         className={cn(
-          "bg-transparent hover:bg-accent hover:text-customBlue focus:bg-accent focus:text-accent-foreground text-customBlue",
+          "bg-transparent hover:bg-accent focus:bg-accent focus:text-accent-foreground text-customBlue",
           isActive && "font-bold bg-slate-500"
         )}
       >
@@ -74,7 +74,7 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-black focus:bg-accent focus:text-accent-foreground",
             className
           )}
           {...props}

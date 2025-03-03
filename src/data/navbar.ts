@@ -6,12 +6,6 @@ export const products = [
     "description": "Tədbirlərinizə dad və zəriflik qatmaq üçün peşəkar catering xidmətlərimiz!",
     "items": [
       {
-        "id": "1",
-        "title": "Bütün xidmətlər",
-        "href": "/docs/services",
-        "description": "İstənilən tədbir üçün geniş çeşidli catering həlləri – zövqünüzə uyğun menyular!"
-      },
-      {
         "id": "2",
         "title": "Özəl və korporativ tədbirlər",
         "href": "/docs/services/item/corporate",
@@ -49,12 +43,6 @@ export const products = [
     "category": "additional-services",
     "description": "Tədbirlərinizə xüsusi toxunuş qatacaq əlavə xidmətlərimizlə tanış olun!",
     "items": [
-      {
-        "id": "1",
-        "title": "Bütün xidmətlər",
-        "href": "/docs/additional-services",
-        "description": "Bütün əlavə xidmətlərimiz – tədbirləriniz üçün geniş seçimlər!"
-      },
       {
         "id": "2",
         "title": "Master Klassların təşkili",

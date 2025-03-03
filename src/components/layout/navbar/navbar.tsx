@@ -37,7 +37,7 @@ export default async function NavBar() {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-customBlue bg-transparent hover:bg-accent hover:text-customBlue focus:bg-accent focus:text-accent-foreground">
+                <NavigationMenuTrigger className="text-customBlue bg-transparent hover:bg-accent focus:bg-accent focus:text-accent-foreground">
                   Əsas səhifə
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
