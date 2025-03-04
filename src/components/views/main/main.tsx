@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { products } from "@/data/navbar";
+import { navbarItems as products } from "@/data/navbar";
 
 import Link from "next/link";
 

@@ -3,4 +3,6 @@ export interface CategoryProps {
     title: string;
     href: string;
     description: string;
+    imageUrl?: string;
+    price?: number;
 }

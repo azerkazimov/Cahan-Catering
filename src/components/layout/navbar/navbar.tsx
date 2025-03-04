@@ -14,14 +14,14 @@ import {
 
 import { cn } from "@/lib/utils";
 
-import { NavBarProps } from "../../../helpers/interfaces/navbar";
 
-import { SearchDialog } from "../../shared/search-dialog/search-dialog";
-import { Sidebar } from "../../shared/sidebar/sidebar";
 import Image from "next/image";
+import { NavBarProps } from "@/helpers/interfaces/navbar";
+import { SearchDialog } from "@/components/shared/search-dialog/search-dialog";
+import { Sidebar } from "@/components/shared/sidebar/sidebar";
 
 export default async function NavBar() {
-  const response = await fetch(`${process.env.API_HOST}/products`);
+  const response = await fetch(`${process.env.API_HOST}/navbar`);
   if (!response.ok) {
     throw new Error(`Failed to fetch products: ${response.statusText}`);
   }

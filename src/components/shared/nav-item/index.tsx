@@ -1,12 +1,12 @@
 "use client";
 
-import { NavBarProps } from "../../../helpers/interfaces/navbar";
 import {
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { NavBarProps } from "@/helpers/interfaces/navbar";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

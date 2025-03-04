@@ -9,12 +9,11 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { ProductProps, SubProductProps } from "../../../helpers/interfaces/products";
 import { CategoryProps } from "../../../helpers/interfaces/categories";
 import { usePathname } from "next/navigation";
 import { useProductStore } from "@/store";
 
-type ProductCardProps = { product: ProductProps | CategoryProps | SubProductProps };
+type ProductCardProps = { product: CategoryProps };
 
 export function ProductCard({ product }: ProductCardProps) {
   const pathname = usePathname();
@@ -24,7 +23,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   const addToCart = (
     event: React.MouseEvent<HTMLButtonElement>,
-    product: ProductProps
+    product: CategoryProps
   ) => {
     event.preventDefault();
     setProducts((prev) => {
@@ -42,49 +41,48 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="h-[300px] relative overflow-hidden object-cover rounded-t-lg">
           <Image
             src={
-              "imageUrl" in product
+              typeof product.imageUrl === "string"
                 ? product.imageUrl
                 : "https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png?20210521171500"
             }
-            alt={"name" in product ? product.name : product.title}
+            alt={"name" in product ? String(product.name) : String(product.title)}
             fill
             className="object-cover"
           />
         </div>
       </CardHeader>
-     <div className="translate-y-full group-hover:-translate-y-full bg-zinc-300/50 backdrop-blur-md  transition-transform duration-300">
-
-     
-      <CardContent className="p-4 ">
-        <h3 className="font-medium text-black">
-          {isDocs
-            ? "title" in product
-              ? product.title
-              : ""
-            : "name" in product
-            ? product.name
-            : ""}
-        </h3>
-        {!isDocs && "price" in product && (
-          <p className="text-sm text-zinc-400">${product.price}</p>
-        )}
-        {isDocs && "description" in product && (
-          <p className="text-sm text-zinc-400">{product.description}</p>
-        )}
-      </CardContent>
-      <CardFooter className="p-4 pt-0 flex gap-2">
-        <Button
-          className="flex-1 bg-white text-black hover:bg-zinc-200"
-          onClick={(event) => addToCart(event, product as ProductProps)}
-        >
-          {isDocs ? "View products" : "Add to card"}
-        </Button>
-        {!isDocs && (
-          <Button size="icon" variant="outline" className="border-zinc-300">
-            <Eye className="h-4 w-4 text-black" />
+      <div className="translate-y-full group-hover:-translate-y-full bg-zinc-300/50 backdrop-blur-md  transition-transform duration-300">
+        <CardContent className="p-4 ">
+          <h3 className="font-medium text-black">
+            {isDocs
+              ? "title" in product
+                ? String(product.title)
+                : ""
+              : "name" in product
+              ? String(product.name)
+              : ""}
+          </h3>
+          {!isDocs && "price" in product && (
+            <p className="text-sm text-zinc-400">${product.price}</p>
+          )}
+          {isDocs && "description" in product && (
+            <p className="text-sm text-zinc-400">{product.description}</p>
+          )}
+        </CardContent>
+        <CardFooter className="p-4 pt-0 flex gap-2">
+          <Button
+            className="flex-1 bg-white text-black hover:bg-zinc-200"
+            onClick={(event) => addToCart(event, product as CategoryProps)}
+          >
+            {isDocs ? "View products" : "Add to card"}
           </Button>
-        )}
-      </CardFooter></div>
+          {!isDocs && (
+            <Button size="icon" variant="outline" className="border-zinc-300">
+              <Eye className="h-4 w-4 text-black" />
+            </Button>
+          )}
+        </CardFooter>
+      </div>
     </Card>
   );
 }
