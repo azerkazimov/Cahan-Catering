@@ -1,12 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ProductProps } from "@/helpers/interfaces/products";
+import { CategoryProps } from "@/helpers/interfaces/categories";
 import { useProductStore } from "@/store";
 import { MinusIcon, PlusIcon } from "lucide-react";
 
 interface QuantitySelectorProps {
-  product: ProductProps;
+  product: CategoryProps;
 }
 
 export default function QuantitySelector({ product }: QuantitySelectorProps) {
@@ -14,12 +14,12 @@ export default function QuantitySelector({ product }: QuantitySelectorProps) {
 
   const current = products.find((p) => p.id === product.id);
 
-  const count = current ? current.quantity : 1;
+  const count = current?.quantity ?? 1;
 
   const incrementQuantity = () => {
     setProducts((prev) =>
       prev.map((p) =>
-        p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
+        p.id === product.id ? { ...p, quantity: (p.quantity ?? 0) + 1 } : p
       )
     );
   };
@@ -28,7 +28,7 @@ export default function QuantitySelector({ product }: QuantitySelectorProps) {
     if (count > 1) {
       setProducts((prev) =>
         prev.map((p) =>
-          p.id === product.id ? { ...p, quantity: p.quantity - 1 } : p
+          p.id === product.id ? { ...p, quantity: (p.quantity ?? 0) - 1 } : p
         )
       );
     }

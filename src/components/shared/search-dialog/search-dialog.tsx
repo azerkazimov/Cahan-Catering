@@ -18,16 +18,16 @@ import {
 } from "@/components/ui/dialog";
 
 import { useRouter } from "next/navigation";
-import { ProductProps } from "@/helpers/interfaces/products";
 import { searchProducts } from "@/utils/actions/search-product";
 import SearchResult from "./search-result";
 import SearchSuggestion from "./search-suggestion";
+import { CategoryProps } from "@/helpers/interfaces/categories";
 
 export function SearchDialog() {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [searchResults, setSearchResults] = React.useState<ProductProps[]>([]);
+  const [searchResults, setSearchResults] = React.useState<CategoryProps[]>([]);
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -59,8 +59,12 @@ export function SearchDialog() {
     return () => clearTimeout(timerId);
   }, [searchQuery]);
 
-  const handleProductSelect = (product: ProductProps) => {
-    router.push(product.path);
+  const handleProductSelect = (product: CategoryProps) => {
+    if (product.path) {
+      router.push(product.path);
+    } else {
+      console.error("Product path is undefined");
+    }
     setOpen(false);
   };
 

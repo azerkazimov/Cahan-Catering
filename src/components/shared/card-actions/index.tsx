@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import QuantitySelector from "../quantity-selector";
 import { Heart } from "lucide-react";
 import { useProductStore } from "@/store";
-import { ProductProps } from "@/helpers/interfaces/products";
+import { CategoryProps } from "@/helpers/interfaces/categories";
 
-export default function CardActions({ product }: { product: ProductProps }) {
+export default function CardActions({ product }: { product: CategoryProps }) {
   const { setProducts } = useProductStore();
 
   const addToCart = (
     event: React.MouseEvent<HTMLButtonElement>,
-    product: ProductProps
+    product: CategoryProps
   ) => {
     event.preventDefault();
     setProducts((prev) => {
@@ -34,7 +34,7 @@ export default function CardActions({ product }: { product: ProductProps }) {
         <Button
           variant="outline"
           className="flex-1"
-          onClick={(event) => addToCart(event, product as ProductProps)}
+          onClick={(event) => addToCart(event, product as CategoryProps)}
         >
           Add to card
         </Button>

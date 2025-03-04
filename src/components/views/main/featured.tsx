@@ -1,6 +1,6 @@
 import { ProductCard } from "@/components/shared/product-card/product-card";
 import { Button } from "@/components/ui/button";
-import { ProductProps } from "@/helpers/interfaces/products";
+import { CategoryProps } from "@/helpers/interfaces/categories";
 import Link from "next/link";
 import { GoArrowRight } from "react-icons/go";
 
@@ -30,8 +30,8 @@ export default async function Featured() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-        {items.map((product: ProductProps) => (
-          <Link key={product.id} href={product.path}>
+        {items.map((product: CategoryProps) => (
+          <Link key={product.id} href={product.path || '#'}>
             <ProductCard key={product.id} product={product} />
           </Link>
         ))}

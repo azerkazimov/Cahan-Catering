@@ -19,7 +19,10 @@ export function Sidebar() {
 
   const totalItems = cartItems.length;
 
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + (item.price ?? 0) * (item.quantity ?? 0),
+    0
+  );
 
   return (
     <Sheet>

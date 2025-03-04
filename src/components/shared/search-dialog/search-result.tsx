@@ -1,9 +1,9 @@
 import { CommandGroup, CommandItem } from "@/components/ui/command";
-import { ProductProps } from "@/helpers/interfaces/products";
+import { CategoryProps } from "@/helpers/interfaces/categories";
 
 interface SearchResultprops {
-  results: ProductProps[];
-  onSelect: (product: ProductProps) => void;
+  results: CategoryProps[];
+  onSelect: (product: CategoryProps) => void;
 }
 
 export default function SearchResult({ results, onSelect }: SearchResultprops) {

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import CardActions from "@/components/shared/card-actions";
 import { Star } from "lucide-react";
-import { ProductProps } from "../../../../helpers/interfaces/products";
+import { CategoryProps } from "@/helpers/interfaces/categories";
 
 interface ItemProps {
   params: Promise<{
@@ -19,7 +19,7 @@ export default async function ProductCategory({ params }: ItemProps) {
     throw new Error(`Failed to fetch products: ${response.statusText}`);
   }
 
-  const items: ProductProps[] = await response.json();
+  const items: CategoryProps[] = await response.json();
 
   const itemArr = items.flatMap((item) => {
     return item;
@@ -69,19 +69,7 @@ export default async function ProductCategory({ params }: ItemProps) {
 
           {product && <CardActions product={product} />}
 
-          {/* <QuantitySelector product={product?.id} />
-
-          <div className="flex gap-4">
-            <Button className="flex-1 bg-white text-black hover:bg-zinc-200">
-              Buy now
-            </Button>
-            <Button variant="outline" className="flex-1">
-              Add to card
-            </Button>
-            <Button variant="outline" size="icon">
-              <Heart className="w-4 h-4" />
-            </Button>
-          </div> */}
+          
 
           <div className="pt-4">
             <h5>Description</h5>
